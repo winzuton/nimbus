@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9976D42D19608FF29C29B32B /* Pods_Nimbus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA604F992F6AE895FE987A5 /* Pods_Nimbus.framework */; };
 		D65458661ED2F61A0047D6DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65458651ED2F61A0047D6DA /* AppDelegate.swift */; };
 		D65458681ED2F61A0047D6DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65458671ED2F61A0047D6DA /* ViewController.swift */; };
 		D654586B1ED2F61A0047D6DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D65458691ED2F61A0047D6DA /* Main.storyboard */; };
@@ -34,6 +35,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4CA604F992F6AE895FE987A5 /* Pods_Nimbus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nimbus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1DFF2C3EB098B8D71EBC833 /* Pods-Nimbus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nimbus.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nimbus/Pods-Nimbus.release.xcconfig"; sourceTree = "<group>"; };
+		A50235F1F5DEE0F000587295 /* Pods-Nimbus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nimbus.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nimbus/Pods-Nimbus.debug.xcconfig"; sourceTree = "<group>"; };
 		D65458621ED2F61A0047D6DA /* Nimbus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nimbus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D65458651ED2F61A0047D6DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D65458671ED2F61A0047D6DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9976D42D19608FF29C29B32B /* Pods_Nimbus.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +79,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D5B2107D8C0DB5D59047CF8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CA604F992F6AE895FE987A5 /* Pods_Nimbus.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D65458591ED2F61A0047D6DA = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +94,8 @@
 				D65458791ED2F61A0047D6DA /* NimbusTests */,
 				D65458841ED2F61A0047D6DA /* NimbusUITests */,
 				D65458631ED2F61A0047D6DA /* Products */,
+				E99894F63CC8436AB2AEF726 /* Pods */,
+				1D5B2107D8C0DB5D59047CF8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +140,15 @@
 			path = NimbusUITests;
 			sourceTree = "<group>";
 		};
+		E99894F63CC8436AB2AEF726 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A50235F1F5DEE0F000587295 /* Pods-Nimbus.debug.xcconfig */,
+				A1DFF2C3EB098B8D71EBC833 /* Pods-Nimbus.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +156,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D654588A1ED2F61A0047D6DA /* Build configuration list for PBXNativeTarget "Nimbus" */;
 			buildPhases = (
+				978E303B32E5BAC8A6E54D34 /* [CP] Check Pods Manifest.lock */,
 				D654585E1ED2F61A0047D6DA /* Sources */,
 				D654585F1ED2F61A0047D6DA /* Frameworks */,
 				D65458601ED2F61A0047D6DA /* Resources */,
+				34DA8D834EB044AC1E6F2016 /* [CP] Embed Pods Frameworks */,
+				C1C34F1872F22D9407C242C1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -256,6 +283,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		34DA8D834EB044AC1E6F2016 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Nimbus/Pods-Nimbus-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		978E303B32E5BAC8A6E54D34 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C1C34F1872F22D9407C242C1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Nimbus/Pods-Nimbus-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D654585E1ED2F61A0047D6DA /* Sources */ = {
@@ -415,6 +490,7 @@
 		};
 		D654588B1ED2F61A0047D6DA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A50235F1F5DEE0F000587295 /* Pods-Nimbus.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = HEVK4GERJ9;
@@ -428,6 +504,7 @@
 		};
 		D654588C1ED2F61A0047D6DA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1DFF2C3EB098B8D71EBC833 /* Pods-Nimbus.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = HEVK4GERJ9;
