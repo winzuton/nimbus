@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,12 +20,55 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchscreen" translatesAutoresizingMaskIntoConstraints="NO" id="eb0-Y7-5ib">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a90-zC-02F">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p0z-2H-76a">
+                                        <rect key="frame" x="323" y="10" width="37" height="30"/>
+                                        <state key="normal" title="°C/°F">
+                                            <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="poweredby-gray" translatesAutoresizingMaskIntoConstraints="NO" id="w4h-du-piO">
+                                        <rect key="frame" x="15" y="12" width="50" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="5GT-pB-peE"/>
+                                            <constraint firstAttribute="width" constant="50" id="KHH-Tw-aH8"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="p0z-2H-76a" secondAttribute="trailing" constant="15" id="1sz-2W-RJf"/>
+                                    <constraint firstItem="w4h-du-piO" firstAttribute="leading" secondItem="a90-zC-02F" secondAttribute="leading" constant="15" id="3UX-PW-73G"/>
+                                    <constraint firstItem="w4h-du-piO" firstAttribute="centerY" secondItem="a90-zC-02F" secondAttribute="centerY" id="RP9-If-vZc"/>
+                                    <constraint firstItem="p0z-2H-76a" firstAttribute="centerY" secondItem="a90-zC-02F" secondAttribute="centerY" id="eVy-YF-ewf"/>
+                                    <constraint firstAttribute="height" constant="49" id="or7-Gu-1kV"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="a90-zC-02F" secondAttribute="trailing" id="E8Q-0N-jQn"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="a90-zC-02F" secondAttribute="bottom" id="Fb9-LO-0zE"/>
+                            <constraint firstItem="a90-zC-02F" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="GrZ-XX-mNd"/>
+                            <constraint firstItem="eb0-Y7-5ib" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="IVz-qY-pa3"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="eb0-Y7-5ib" secondAttribute="bottom" id="cod-rl-4bp"/>
+                            <constraint firstItem="eb0-Y7-5ib" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="iP4-OL-UY6"/>
+                            <constraint firstAttribute="trailing" secondItem="eb0-Y7-5ib" secondAttribute="trailing" id="rkX-W6-CNP"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="launchscreen" width="1080" height="1920"/>
+        <image name="poweredby-gray" width="180" height="72"/>
+    </resources>
 </document>
