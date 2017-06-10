@@ -9,12 +9,13 @@
 import UIKit
 
 class MainViewController: UIViewController {
-
-    @IBOutlet weak var poweredByImage: UIImageView!
     
     @IBOutlet weak var localityLabel: UILabel!
+    @IBOutlet weak var poweredByImage: UIImageView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var unitsButton: UIButton!
+    
+    @IBOutlet weak var statusView: UIView!
     
     var isDaytime: Bool = true
     
@@ -55,9 +56,9 @@ class MainViewController: UIViewController {
             self.view.backgroundColor = UIColor.white
         }*/
         
-        self.view.backgroundColor = UIColor.black
+        // self.view.backgroundColor = UIColor.black
         
-        UIApplication.shared.statusBarStyle = .lightContent
+        // UIApplication.shared.statusBarStyle = .lightContent
         
         // Setup link to Powered By Image
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openPoweredByLink(tapGestureRecognizer:)))
@@ -66,7 +67,7 @@ class MainViewController: UIViewController {
         
         if let hourlyVC = mainPageViewController?.viewControllerList.first as? HourlyViewController {
             hourlyViewController = hourlyVC
-            hourlyVC.tryLabel.text = "やった！"
+            //hourlyVC.tryLabel.text = "やった！"
             // Call function in the class for hourly
         }
         
@@ -93,27 +94,38 @@ class MainViewController: UIViewController {
     func refreshWeatherData(refreshControl: UIRefreshControl) {
         
         if isDaytime {
-            self.view.backgroundColor = UIColor.white
+            /*self.view.backgroundColor = UIColor.white
             UIApplication.shared.statusBarStyle = .default
             poweredByImage.image = UIImage(named: "poweredby-dark")
             localityLabel.textColor = UIColor.black
             unitsButton.setTitleColor(UIColor.black, for: .normal)
             pageControl.tintColor = UIColor.lightGray
-            pageControl.currentPageIndicatorTintColor = UIColor.black
+            pageControl.currentPageIndicatorTintColor = UIColor.black*/
             isDaytime = false
+            UIView.animate(withDuration: 0.3){
+                self.statusView.isHidden = true
+                self.statusView.backgroundColor = UIColor.black
+                // Show text: no internet, data updated, privacy off, airplane mode on, etc.
+            }
         } else {
-            self.view.backgroundColor = UIColor.black
+            /*self.view.backgroundColor = UIColor.black
             UIApplication.shared.statusBarStyle = .lightContent
             poweredByImage.image = UIImage(named: "poweredby-light")
             localityLabel.textColor = UIColor.white
             unitsButton.setTitleColor(UIColor.white, for: .normal)
             pageControl.tintColor = UIColor.darkGray
-            pageControl.currentPageIndicatorTintColor = UIColor.white
+            pageControl.currentPageIndicatorTintColor = UIColor.white*/
             isDaytime = true
+            UIView.animate(withDuration: 0.3){
+                self.statusView.isHidden = false
+                self.statusView.backgroundColor = UIColor.black
+                // Show text: no internet, data updated, privacy off, airplane mode on, etc.
+            }
         }
         
         // somewhere in your code you might need to call:
         refreshControl.endRefreshing()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -127,6 +139,27 @@ class MainViewController: UIViewController {
             // mainPageViewController.pageControlDelegate = self // TODO: Already done during didSet?
             self.mainPageViewController = mainPageViewController
         }
+        
+    }
+    
+    // Toggle °C / ° F button 
+    @IBAction func toggleTemperatureUnit(_ sender: UIButton) {
+        
+        // New class for weather data
+            // unit default = si
+        // Set NSUserDefault as well for these data? to retain!
+        // If clicked, set new unit var (si/us), convert the numbers <bug ang summary part>, set bold the new unit
+            // Next call should use new unit specification 
+        
+        
+        /*var boldText  = "Filter:"
+        var attrs = [NSFontAttributeName : UIFont.boldSystemFontOfSize(15)]
+        var attributedString = NSMutableAttributedString(string:boldText, attributes:attrs)
+        
+        var normalText = "Hi am normal"
+        var normalString = NSMutableAttributedString(string:normalText)
+        
+        attributedString.appendAttributedString(normalString)*/
         
     }
 
@@ -145,15 +178,17 @@ extension MainViewController: PageControlDelegate {
 
 extension MainViewController: RefreshControlDelegate {
     func refreshControl(_ viewController: UIViewController, _ refreshControl: UIRefreshControl) {
+        
         refreshWeatherData(refreshControl: refreshControl)
+        
     }
 }
 
 extension MainViewController: DailyViewDidLoadDelegate {
     func dailyViewDidLoad(_ viewController: DailyViewController) {
-        if let dailyVC = mainPageViewController?.viewControllerList.last as? DailyViewController {
-            dailyVC.tryLabel2.text = "やった！!!!!!!"
+        //if let dailyVC = mainPageViewController?.viewControllerList.last as? DailyViewController {
+            //dailyVC.tryLabel2.text = "やった！!!!!!!"
             // Call function in the class for setting daily values
-        }
+        //}
     }
 }

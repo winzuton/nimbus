@@ -10,10 +10,13 @@ import UIKit
 
 class HourlyViewController: UIViewController {
     
-    @IBOutlet weak var tryLabel: UILabel!
-    
     // delegate for scroll to main?
     @IBOutlet weak var hourlyScrollView: UIScrollView!
+    
+    @IBOutlet weak var nowView: UIView!
+    
+    @IBOutlet weak var hoursTitleView: UIView!
+    
     
     weak var refreshControlDelegate: RefreshControlDelegate?
     
@@ -26,6 +29,25 @@ class HourlyViewController: UIViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         hourlyScrollView.refreshControl = refreshControl
+        
+        // Lines
+        
+        let viewWidth = self.view.bounds.size.width
+        let viewHeight = nowView.frame.size.height
+        
+        let topLine = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: 1))
+        topLine.backgroundColor = UIColor.lightGray
+        nowView.addSubview(topLine)
+        
+        let bottomLine = UIView(frame: CGRect(x: 0, y: viewHeight, width: viewWidth, height: 1))
+        bottomLine.backgroundColor = UIColor.lightGray
+        nowView.addSubview(bottomLine)
+        
+        let hoursTitleViewHeight = hoursTitleView.frame.size.height
+        let bottomLine2 = UIView(frame: CGRect(x: 0, y: hoursTitleViewHeight, width: viewWidth, height: 1))
+        bottomLine2.backgroundColor = UIColor.lightGray
+        hoursTitleView.addSubview(bottomLine2)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,9 +59,10 @@ class HourlyViewController: UIViewController {
         refreshControlDelegate?.refreshControl(self, refreshControl)
     }
     
+    // Also called after refresh scroll 
     override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews() // important
-        hourlyScrollView.setContentOffset(CGPoint(x: 0.0, y: 30.0), animated: true)
+        super.viewDidLayoutSubviews()
+        hourlyScrollView.setContentOffset(CGPoint(x: 0.0, y: 20.0), animated: true)
     }
 
     /*
