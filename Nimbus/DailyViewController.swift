@@ -10,10 +10,13 @@ import UIKit
 
 class DailyViewController: UIViewController {
     
-    @IBOutlet weak var dailyScollView: UIScrollView!
+    //@IBOutlet weak var dailyScollView: UIScrollView!
     
     @IBOutlet weak var daysTitleView: UIView!
     
+    @IBOutlet weak var dailyTableView: UITableView!
+    @IBOutlet var topHeaderView: UIView!
+    @IBOutlet var summaryHeaderView: UIView!
     
     weak var refreshControlDelegate: RefreshControlDelegate?
     weak var dailyViewDidLoadDelegate: DailyViewDidLoadDelegate?
@@ -25,12 +28,12 @@ class DailyViewController: UIViewController {
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        dailyScollView.refreshControl = refreshControl
+        dailyTableView.refreshControl = refreshControl
         
         dailyViewDidLoadDelegate?.dailyViewDidLoad(self)
         
         // Lines
-        let viewWidth = self.view.bounds.size.width
+        /* let viewWidth = self.view.bounds.size.width
         
         let topLine = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: 1))
         topLine.backgroundColor = UIColor.lightGray
@@ -39,7 +42,13 @@ class DailyViewController: UIViewController {
         let daysTitleViewHeight = daysTitleView.frame.size.height
         let bottomLine = UIView(frame: CGRect(x: 0, y: daysTitleViewHeight, width: viewWidth, height: 1))
         bottomLine.backgroundColor = UIColor.lightGray
-        daysTitleView.addSubview(bottomLine)
+        daysTitleView.addSubview(bottomLine) */
+        
+        self.dailyTableView.delegate = self
+        self.dailyTableView.dataSource = self
+        
+        dailyTableView.tableHeaderView = topHeaderView
+        dailyTableView.sectionHeaderHeight = summaryHeaderView.frame.size.height
         
     }
 
@@ -55,7 +64,7 @@ class DailyViewController: UIViewController {
     // Also called after refresh scroll 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        dailyScollView.setContentOffset(CGPoint(x: 0.0, y: 20.0), animated: false)
+        dailyTableView.setContentOffset(CGPoint(x: 0.0, y: 20.0), animated: false)
     }
     
     /*
@@ -73,5 +82,45 @@ protocol DailyViewDidLoadDelegate: class {
     
     func dailyViewDidLoad(_ viewController: DailyViewController)
     
+}
+
+extension DailyViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 24
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "dailyTableDataCell", for: indexPath) as? DailyTableViewCell {
+            
+            /*let forecast = forecasts[indexPath.row]
+             cell.configureCell(forecast: forecast)*/
+            
+            // cell.configureCell()
+            
+            return cell
+        } else {
+            return HourlyTableViewCell()
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return summaryHeaderView
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if dailyTableView.contentOffset.y == 0 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1) , execute: {
+                self.dailyTableView.setContentOffset(CGPoint(x: 0.0, y: 20.0), animated: true)
+            })
+            
+        }
+    }
 }
 

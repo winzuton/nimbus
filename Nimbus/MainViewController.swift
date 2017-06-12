@@ -56,7 +56,7 @@ class MainViewController: UIViewController {
             self.view.backgroundColor = UIColor.white
         }*/
         
-        // self.view.backgroundColor = UIColor.black
+        self.view.backgroundColor = UIColor.OffWhite
         
         // UIApplication.shared.statusBarStyle = .lightContent
         
@@ -104,7 +104,7 @@ class MainViewController: UIViewController {
             isDaytime = false
             UIView.animate(withDuration: 0.3){
                 self.statusView.isHidden = true
-                self.statusView.backgroundColor = UIColor.black
+                // self.statusView.backgroundColor = UIColor.black
                 // Show text: no internet, data updated, privacy off, airplane mode on, etc.
             }
         } else {
@@ -118,7 +118,7 @@ class MainViewController: UIViewController {
             isDaytime = true
             UIView.animate(withDuration: 0.3){
                 self.statusView.isHidden = false
-                self.statusView.backgroundColor = UIColor.black
+                // self.statusView.backgroundColor = UIColor.black
                 // Show text: no internet, data updated, privacy off, airplane mode on, etc.
             }
         }
@@ -192,3 +192,5 @@ extension MainViewController: DailyViewDidLoadDelegate {
         //}
     }
 }
+
+
