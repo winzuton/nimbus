@@ -12,15 +12,14 @@ class HourlyTableViewCell: UITableViewCell {
     
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var time: UILabel!
-    @IBOutlet weak var lowTemperature: UILabel!
-    @IBOutlet weak var highTemperature: UILabel!
+    @IBOutlet weak var temperature: UILabel!
     @IBOutlet weak var precipitationRate: UILabel!
+    
     
     func configureCell() { // TODO: Create 'Forecast' class for parameter
         icon.image = UIImage(named: "icon-dark")
-        time.text = "12:00 AM"
-        lowTemperature.text = "⇣24°"
-        highTemperature.text = "⇡29°"
+        time.text = "2 AM"
+        temperature.text = "29°"
         precipitationRate.text = "30%"
     }
     

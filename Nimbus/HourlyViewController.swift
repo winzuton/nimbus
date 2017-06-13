@@ -23,8 +23,6 @@ class HourlyViewController: UIViewController {
     
     @IBOutlet var summaryHeaderView: UIView!
     
-    
-    
     weak var refreshControlDelegate: RefreshControlDelegate?
     
     
@@ -63,7 +61,10 @@ class HourlyViewController: UIViewController {
         hourlyTableView.tableHeaderView = nowHeaderView
         hourlyTableView.sectionHeaderHeight = summaryHeaderView.frame.size.height
         
-        // TODO: when scrolling fast, the top or bottom is not fully shown then it will bounce!
+        // Make summary view tappable to make the table view scroll to top
+        let tap = UITapGestureRecognizer(target: self, action: #selector(HourlyViewController.scrollTableViewToTop))
+        summaryHeaderView.isUserInteractionEnabled = true
+        summaryHeaderView.addGestureRecognizer(tap)
         
     }
 
@@ -92,6 +93,15 @@ class HourlyViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // Scroll Table view to top when locality is tapped
+    func scrollTableViewToTop(sender: UITapGestureRecognizer) {
+        // Scroll to top only when section header is at the top 
+        // TODO: Create constants like for height of 260 (table header height)
+        if hourlyTableView.contentOffset.y >= 260 {
+            hourlyTableView.setContentOffset(CGPoint(x: 0.0, y: 20.0), animated: true)
+        }
+    }
 
 }
 

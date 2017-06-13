@@ -50,6 +50,11 @@ class DailyViewController: UIViewController {
         dailyTableView.tableHeaderView = topHeaderView
         dailyTableView.sectionHeaderHeight = summaryHeaderView.frame.size.height
         
+        // Make summary view tappable to make the table view scroll to top
+        let tap = UITapGestureRecognizer(target: self, action: #selector(DailyViewController.scrollTableViewToTop))
+        summaryHeaderView.isUserInteractionEnabled = true
+        summaryHeaderView.addGestureRecognizer(tap)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,6 +70,15 @@ class DailyViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         dailyTableView.setContentOffset(CGPoint(x: 0.0, y: 20.0), animated: false)
+    }
+    
+    // Scroll Table view to top when locality is tapped
+    func scrollTableViewToTop(sender: UITapGestureRecognizer) {
+        // Scroll to top only when section header is at the top
+        // TODO: Create constants like for height of 60 (table header height)
+        if dailyTableView.contentOffset.y >= 60 {
+            dailyTableView.setContentOffset(CGPoint(x: 0.0, y: 20.0), animated: true)
+        }
     }
     
     /*
@@ -123,4 +137,6 @@ extension DailyViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
+
+
 
