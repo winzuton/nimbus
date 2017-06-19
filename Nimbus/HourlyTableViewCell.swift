@@ -13,14 +13,21 @@ class HourlyTableViewCell: UITableViewCell {
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var temperature: UILabel!
-    @IBOutlet weak var precipitationRate: UILabel!
+    @IBOutlet weak var precipProbability: UILabel!
     
-    
-    func configureCell() { // TODO: Create 'Forecast' class for parameter
-        icon.image = UIImage(named: "icon-dark")
-        time.text = "2 AM"
-        temperature.text = "29°"
-        precipitationRate.text = "30%"
+    func configureCell(forecast: HourlyForecast) {
+        // TODO: light and dark versions
+        icon.image = UIImage(named: "dark-\(forecast.icon)")
+        time.text = forecast.timeString
+        temperature.text = forecast.temperatureString
+        
+        // TODO: see for snow and sleet as well
+        if (forecast.precipProbability > 0) && (forecast.icon.caseInsensitiveCompare(Weather.rain) == .orderedSame) {
+            precipProbability.isHidden = false
+            precipProbability.text = forecast.precipProbabilityString
+        } else {
+            precipProbability.isHidden = true
+        }
     }
     
     override func awakeFromNib() {

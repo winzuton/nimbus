@@ -12,14 +12,29 @@ class DailyViewController: UIViewController {
     
     //@IBOutlet weak var dailyScollView: UIScrollView!
     
-    @IBOutlet weak var daysTitleView: UIView!
-    
     @IBOutlet weak var dailyTableView: UITableView!
     @IBOutlet var topHeaderView: UIView!
     @IBOutlet var summaryHeaderView: UIView!
+    @IBOutlet weak var dailySummary: UILabel!
+    
+    
+    @IBOutlet weak var updateInfoView: UIView!
+    @IBOutlet weak var updateInfo: UILabel!
+    
+    @IBOutlet weak var daysSummaryView: UIView!
+    
     
     weak var refreshControlDelegate: RefreshControlDelegate?
     weak var dailyViewDidLoadDelegate: DailyViewDidLoadDelegate?
+    
+    var isSummmaryViewShadowed = false
+    
+    var dailyForecasts = [DailyForecast]()
+  
+    var currentBackgroundColor: UIColor?
+    
+    var topLine: UIView!
+    var bottomLine: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,16 +48,16 @@ class DailyViewController: UIViewController {
         dailyViewDidLoadDelegate?.dailyViewDidLoad(self)
         
         // Lines
-        /* let viewWidth = self.view.bounds.size.width
+        let summaryViewWidth = self.view.bounds.size.width
+        let summaryViewHeight = summaryHeaderView.frame.size.height
         
-        let topLine = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: 1))
-        topLine.backgroundColor = UIColor.lightGray
-        daysTitleView.addSubview(topLine)
+        topLine = UIView(frame: CGRect(x: 0, y: 0, width: summaryViewWidth, height: 2))
+        topLine.backgroundColor = UIColor.OffWhite2
+        summaryHeaderView.addSubview(topLine)
         
-        let daysTitleViewHeight = daysTitleView.frame.size.height
-        let bottomLine = UIView(frame: CGRect(x: 0, y: daysTitleViewHeight, width: viewWidth, height: 1))
-        bottomLine.backgroundColor = UIColor.lightGray
-        daysTitleView.addSubview(bottomLine) */
+        bottomLine = UIView(frame: CGRect(x: 0, y: summaryViewHeight, width: summaryViewWidth, height: 2))
+        bottomLine.backgroundColor = UIColor.OffWhite4
+        summaryHeaderView.addSubview(bottomLine)
         
         self.dailyTableView.delegate = self
         self.dailyTableView.dataSource = self
@@ -69,15 +84,15 @@ class DailyViewController: UIViewController {
     // Also called after refresh scroll 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        dailyTableView.setContentOffset(CGPoint(x: 0.0, y: 20.0), animated: false)
+        dailyTableView.setContentOffset(CGPoint(x: 0.0, y: CGFloat(UISize.updateView)), animated: false)
     }
     
-    // Scroll Table view to top when locality is tapped
+    // Scroll Table view to top when summary is tapped
     func scrollTableViewToTop(sender: UITapGestureRecognizer) {
         // Scroll to top only when section header is at the top
         // TODO: Create constants like for height of 60 (table header height)
-        if dailyTableView.contentOffset.y >= 60 {
-            dailyTableView.setContentOffset(CGPoint(x: 0.0, y: 20.0), animated: true)
+        if dailyTableView.contentOffset.y > CGFloat(UISize.dailyHeaderView) {
+            dailyTableView.setContentOffset(CGPoint(x: 0.0, y: CGFloat(UISize.updateView)), animated: true)
         }
     }
     
@@ -98,6 +113,7 @@ protocol DailyViewDidLoadDelegate: class {
     
 }
 
+// TODO: remove in current array of data if day has passed for that object 
 extension DailyViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -105,21 +121,23 @@ extension DailyViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 24
+        // TODO: Only display 6 days 
+        // TODO: be sure not negative 
+        return dailyForecasts.count < 7 ? dailyForecasts.count : 7
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "dailyTableDataCell", for: indexPath) as? DailyTableViewCell {
             
-            /*let forecast = forecasts[indexPath.row]
-             cell.configureCell(forecast: forecast)*/
+            let dailyForecast = dailyForecasts[indexPath.row]
+             cell.configureCell(forecast: dailyForecast)
             
-            // cell.configureCell()
+            cell.backgroundColor = currentBackgroundColor
             
             return cell
         } else {
-            return HourlyTableViewCell()
+            return DailyTableViewCell()
         }
         
     }
@@ -129,11 +147,41 @@ extension DailyViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        // Hide Updated View after 01 second 
         if dailyTableView.contentOffset.y == 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1) , execute: {
-                self.dailyTableView.setContentOffset(CGPoint(x: 0.0, y: 20.0), animated: true)
+                // Confirm if still on top after the delay
+                if self.dailyTableView.contentOffset.y == 0 {
+                    self.dailyTableView.setContentOffset(CGPoint(x: 0.0, y: CGFloat(UISize.updateView)), animated: true)
+                }
             })
+        }
+        
+        // TODO: Create constants like for height of 60 (table header height)
+        if dailyTableView.contentOffset.y > CGFloat(UISize.dailyHeaderView) && !isSummmaryViewShadowed {
             
+            // Change summary view color to lighter shade
+            topLine.backgroundColor = UIColor.OffWhite
+            summaryHeaderView.backgroundColor = UIColor.OffWhite2
+            
+            // Create shadow under summary view
+            summaryHeaderView.layer.shadowOffset = CGSize(width: 0, height: 3)
+            summaryHeaderView.layer.shadowRadius = 3
+            summaryHeaderView.layer.shadowColor = UIColor.OffBlack.cgColor
+            summaryHeaderView.layer.shadowOpacity = 0.4
+            isSummmaryViewShadowed = true
+        } else if dailyTableView.contentOffset.y <= CGFloat(UISize.dailyHeaderView) && isSummmaryViewShadowed {
+            
+            // Change summary view color to current shade
+            topLine.backgroundColor = UIColor.OffWhite2
+            summaryHeaderView.backgroundColor = currentBackgroundColor
+            
+            // Remove shadow under summary view
+            summaryHeaderView.layer.shadowOffset = CGSize(width: 0, height: 0)
+            summaryHeaderView.layer.shadowRadius = 0
+            summaryHeaderView.layer.shadowOpacity = 0
+            isSummmaryViewShadowed = false
         }
     }
 }
